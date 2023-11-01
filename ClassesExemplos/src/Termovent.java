@@ -9,14 +9,14 @@ public class Termovent extends SmallElectro {
 
 
     public void toHeat() {
-
+        System.out.println("Heating..");
     }
 
     public void toCool() {
-
+        System.out.println("Cooling...");
     }
 
     public void showTemp() {
-
+        getTempNow();
     }
 }

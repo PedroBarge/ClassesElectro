@@ -40,4 +40,5 @@ public class Oven extends SmallElectro {
     public void showTemp() {
         getTempNow();
     }
+
 }

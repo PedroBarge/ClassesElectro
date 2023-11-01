@@ -6,6 +6,6 @@ public class Toaster extends SmallElectro {
     }
 
     public void toToast() {
-
+        System.out.println("Toasting...");
     }
 }
