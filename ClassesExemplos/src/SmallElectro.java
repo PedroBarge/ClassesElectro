@@ -4,6 +4,7 @@ public class SmallElectro {
     private int timer;
     private int tempMax;
     private int tempNow;
+    private int intensity;
     private int weigth;
     private String color;
     private String material;
@@ -32,40 +33,19 @@ public class SmallElectro {
         this.timer = timer;
     }
 
-    public int getTempMax() {
-        return tempMax;
+    public void setIntensity(int intensity) {
+        this.intensity = intensity;
     }
 
-    public int getWeigth() {
-        return weigth;
-    }
-
-    public void setWeigth(int weigth) {
-        this.weigth = weigth;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public String getMaterial() {
-        return material;
-    }
-
-    public void setMaterial(String material) {
-        this.material = material;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
+    public String getIntensity() {
+        if(intensity == 1) {
+            return "WEAK";
+        } else if(intensity == 2) {
+            return "MEDIUM";
+        } else if(intensity == 3) {
+            return "STRONG";
+        }
+        return null;
     }
 
     public int getTempNow() {
@@ -87,11 +67,21 @@ public class SmallElectro {
         this.power = false;
     }
 
-    public void overheat() {
+    public void checkTemperature() {
         if (tempNow > tempMax) {
-            System.out.println("AI AI !!BOOOOOMMMMM!!!!");
-            turnOff();
+            System.out.println("Please set temperature again. Max is "+tempMax);
+            System.out.print("Temperature set: ");
+            setTempNow(inputScn.nextInt());
+            System.out.println("Temperature is now "+tempNow);
+
+            if(tempNow > tempMax) {
+                checkTemperature();
+            }
         }
+    }
+
+    public int getTempMax() {
+        return tempMax;
     }
 
     public void timerOn() {

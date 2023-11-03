@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Oven extends SmallElectro {
 
     private final int capacity;
@@ -11,34 +13,51 @@ public class Oven extends SmallElectro {
 
     //------------------------------------------------------------------//
 
-    public void toRoast() {
+    public void toRoast(int temperature) throws InterruptedException {
         if(!checkPower()) return;
-        System.out.print("Set temperature: ");
-        setTempNow(inputScn.nextInt());
-        overheat();
-        if(!checkPower()) return;
+        setTempNow(temperature);
+        checkTemperature();
         setTimer(3);
-        for (int i = 0; i < getTimer(); i++) {
-            System.out.println("Cooking...");
+        for (int i = getTimer(); i > 0; i--) {
+            Thread.sleep(900);
+            System.out.println("Food will be ready in "+i);
         }
         System.out.println("Beep! Cooked!");
         setTempNow(0);
         toClean();
         System.out.println("Waiting to turn off.");
+        waitingToTurnOff();
     }
 
     public int getCapacity() {
         return capacity;
     }
 
-    public void toClean() {
-        if (getTempNow() == 0) {
-            System.out.println("Cleaning mode activated.");
+    public void waitingToTurnOff() throws InterruptedException {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("1 - Turn Off");
+        System.out.println("2 - Cook again");
+
+        switch (sc.next()) {
+            case "1":
+                turnOff();
+                break;
+            case "2":
+                System.out.print("Temperature set: ");
+                toRoast(inputScn.nextInt());
+                break;
+            default:
+                System.out.println("Invalid option.");
         }
     }
 
-    public void showTemp() {
-        getTempNow();
+    public void toClean() throws InterruptedException {
+        if (getTempNow() == 0) {
+            for (int i = 0; i < 3; i++) {
+                Thread.sleep(300);
+                System.out.println("Cleaning..");
+            }
+        }
     }
-
 }

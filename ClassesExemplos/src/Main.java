@@ -2,8 +2,10 @@ import java.util.Scanner;
 
 public class Main {
     static Scanner inputScn = new Scanner(System.in);
+    private static Termovent termovent;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+        Termovent termovent;
         menuStar();
         int choiceUser = inputScn.nextInt();
 
@@ -35,7 +37,7 @@ public class Main {
         System.out.print("-> ");
     }
 
-    public static void optOven() {
+    public static void optOven() throws InterruptedException {
         System.out.println("New Oven");
         System.out.println("Please insert the features: ");
 
@@ -64,17 +66,19 @@ public class Main {
         System.out.print("Temperature Max: ");
         int ovenTempMax = inputScn.nextInt();
 
-        System.out.print("Set timer: ");
-        int ovenTimer = inputScn.nextInt();
+        Oven oven = new Oven(0, ovenTempMax, 0, ovenWeight, ovenColor, ovenMat, ovenName, ovenCap, ovenBuiltInBool);
 
-        System.out.print("Set temperature now: ");
-        int ovenTempNow = inputScn.nextInt();
-
-        Oven oven = new Oven(ovenTimer, ovenTempMax, ovenTempNow, ovenWeight, ovenColor, ovenMat, ovenName, ovenCap, ovenBuiltInBool);
-        oven.turnOn();
-        oven.toRoast();
-        oven.toClean();
-
+        System.out.println("You want to turn on? (y/n)");
+        switch(inputScn.next()) {
+            case "y":
+                oven.turnOn();
+                System.out.print("Temperature set: ");
+                oven.toRoast(inputScn.nextInt());
+                break;
+            case "n":
+                menuStar();
+                break;
+        }
     }
 
     public static void optTermovent() {
@@ -97,18 +101,38 @@ public class Main {
         System.out.print("Temperature Max: ");
         int termoTempMax = inputScn.nextInt();
 
-        System.out.print("Set timer: ");
-        int termoTimer = inputScn.nextInt();
 
-        System.out.print("Set temperature now: ");
-        int termoTempNow = inputScn.nextInt();
+        termovent = new Termovent(0, termoTempMax, 0, termoWeight, termoColor, termoMat, termoName);
 
-        Termovent termovent = new Termovent(termoTimer, termoTempMax, termoTempNow, termoWeight, termoColor, termoMat, termoName);
-        termovent.toHeat();
-        termovent.toCool();
+        System.out.println("You want to turn on? (y/n)");
+        switch(inputScn.next()) {
+            case "y":
+                termovent.turnOn();
+                choiceTermoVent();
+                break;
+            case "n":
+                menuStar();
+                break;
+        }
     }
 
-    public static void optToaster() {
+    public static void choiceTermoVent() {
+
+        System.out.println("1 - HEAT");
+        System.out.println("2 - COOL");
+
+        switch(inputScn.next()) {
+            case "1":
+                System.out.print("Temperature set: ");
+                termovent.toHeat(inputScn.nextInt());
+                break;
+            case "2":
+                System.out.print("Set an intensity:\n 1 - WEAK \n 2 - MEDIUM \n 3 - STRONG");
+                termovent.toCool(inputScn.nextInt());
+        }
+    }
+
+    public static void optToaster() throws InterruptedException {
         System.out.println("New Termovent");
         System.out.println("Please insert the features: ");
 
@@ -124,16 +148,18 @@ public class Main {
         System.out.print("Weight: ");
         int toastWeight = inputScn.nextInt();
 
-        System.out.print("Temperature Max: ");
-        int toastTempMax = inputScn.nextInt();
 
-        System.out.print("Set timer: ");
-        int toastTimer = inputScn.nextInt();
+        Toaster toaster = new Toaster(0,0, 0, toastWeight, toastColor, toastMat, toastName);
 
-        System.out.print("Set temperature now: ");
-        int toastTempNow = inputScn.nextInt();
-
-        Toaster toaster = new Toaster(toastTimer, toastTempMax, toastTempNow, toastWeight, toastColor, toastMat, toastName);
-        toaster.toToast();
+        System.out.println("You want to turn on? (y/n)");
+        switch(inputScn.next()) {
+            case "y":
+                toaster.turnOn();
+                toaster.toToast();
+                break;
+            case "n":
+                menuStar();
+                break;
+        }
     }
 }
