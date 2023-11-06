@@ -58,21 +58,21 @@ public class SmallElectro {
 
     //------------------------------------------------------------------//
     public void turnOn() {
-        System.out.println("Turning ON!!!");
+        System.out.println("\033[0;32m" +"Turning ON!!!"+ "\u001b[0m\n");
         this.power = true;
     }
 
     public void turnOff() {
-        System.out.println("Turning OFF!!!");
+        System.out.println("\033[0;31m" +"Turning OFF!!!"+ "\u001b[0m\n");
         this.power = false;
     }
 
     public void checkTemperature() {
         if (tempNow > tempMax) {
-            System.out.println("Please set temperature again. Max is "+tempMax);
-            System.out.print("Temperature set: ");
+            System.out.println("\033[1;36m" +"Please set temperature again. Max is "+tempMax+ "\u001b[0m\n");
+            System.out.print("\033[1;36m" +"Temperature set: "+ "\u001b[0m\n");
             setTempNow(inputScn.nextInt());
-            System.out.println("Temperature is now "+tempNow);
+            System.out.println("\033[1;36m" +"Temperature is now "+tempNow+ "\u001b[0m\n");
 
             if(tempNow > tempMax) {
                 checkTemperature();
